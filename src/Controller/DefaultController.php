@@ -1,9 +1,8 @@
 <?php
 /**
-* Created by PhpStorm.
-* User: Richard
-* Date: 18/10/2019
-* Time: 13:43
+* Created by user.
+* User: abdo
+* Date: 18/01/2022
 */
 
 namespace App\Controller;
@@ -23,5 +22,6 @@ class DefaultController extends AbstractController
    {
        return $this->render('Default/index.html.twig');
    }
+   
 
 }

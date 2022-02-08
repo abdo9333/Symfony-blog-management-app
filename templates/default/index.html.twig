@@ -1,16 +1,22 @@
 <!doctype html>
 <html lang="en">
-<head>
-   <meta charset="utf-8">
-   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
-   <title>UE 3DW22</title>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <title>UE 3DW22</title>
 </head>
+
 <body>
-<div class="jumbotron">
-   <h1 class="display-4">UE 3DW22 - Diversification des langages</h1>
-   <p class="lead">Système de connexion  et de création d'un compte</p>
-   <hr class="my-4">
-</div>
+    <div class="jumbotron">
+        <h1 class="display-4">UE 3DW22 - Diversification des langages</h1>
+        <p class="lead">Système de connexion et de création d'un compte</p>
+        <a class="btn btn-primary" href="{{ path('app_logout') }}" role="button">Log out</a>
+        <a class="btn btn-primary" href="{{ path('app_login') }}" role="button">Log in</a>
+        <a class="btn btn-primary" href="{{ path('inscription') }}" role="button">inscription</a>
+        <hr class="my-4">
+    </div>
 </body>
+
 </html>
