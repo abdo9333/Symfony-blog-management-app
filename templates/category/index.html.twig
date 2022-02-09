@@ -1,37 +1,41 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Category index{% endblock %}
-
-{% block body %}
+{% extends 'base.html.twig' %} {% block title %}Category index{% endblock %} {% block body %}
+<div class="container">
     <h1>Category index</h1>
+    <div class="count">
+        Number of pages : {{ categories.getTotalItemCount }}
+    </div>
 
     <table class="table">
-        <thead>
+        <thead class="thead-dark">
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Discription</th>
-                <th>actions</th>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Discription</th>
+                <th scope="col">actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for category in categories %}
-            <tr>
+            {% for category in categories %}
+            <tr scope="row">
                 <td>{{ category.id }}</td>
                 <td>{{ category.name }}</td>
                 <td>{{ category.discription }}</td>
                 <td>
-                    <a href="{{ path('category_show', {'id': category.id}) }}">show</a>
-                    <a href="{{ path('category_edit', {'id': category.id}) }}">edit</a>
+                    <a class="btn btn-success" href="{{ path('category_show', {'id': category.id}) }}">show</a>
+                    <a class="btn btn-dark ml-1" href="{{ path('category_edit', {'id': category.id}) }}">edit</a>
                 </td>
             </tr>
-        {% else %}
-            <tr>
+            {% else %}
+            <tr scope="row">
                 <td colspan="4">no records found</td>
             </tr>
-        {% endfor %}
+            {% endfor %}
         </tbody>
     </table>
+    {# display navigation #}
+    <div class="navigation">
+        {{ knp_pagination_render( categories, '@KnpPaginator/Pagination/twitter_bootstrap_v4_pagination.html.twig') }}
+    </div>
 
-    <a href="{{ path('category_new') }}">Create new</a>
-{% endblock %}
+    <a class="btn btn-success" href="{{ path('category_new') }}">Create new</a>
+</div> {% endblock %}
