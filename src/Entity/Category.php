@@ -55,4 +55,8 @@ class Category
 
         return $this;
     }
+    public function __ToString()
+   {
+       return $this->getName();
+   }
 }
