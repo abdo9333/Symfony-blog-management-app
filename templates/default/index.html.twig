@@ -1,22 +1,14 @@
-<!doctype html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
-    <title>UE 3DW22</title>
-</head>
-
-<body>
-    <div class="jumbotron">
-        <h1 class="display-4">UE 3DW22 - Diversification des langages</h1>
-        <p class="lead">Système de connexion et de création d'un compte</p>
-        <a class="btn btn-primary" href="{{ path('app_logout') }}" role="button">Log out</a>
-        <a class="btn btn-primary" href="{{ path('app_login') }}" role="button">Log in</a>
-        <a class="btn btn-primary" href="{{ path('inscription') }}" role="button">inscription</a>
-        <hr class="my-4">
+{% extends 'base.html.twig' %} {% block body %}
+<div class="container mt-4">
+    <div class="card bg-light mb-3">
+        <div class="jumbotron text-center mx-auto">
+            <h1 class="display-4 mt-4">UE 3DW22 - Diversification des langages</h1>
+            <p class="lead">Bienvenu dans votre bibliothèque</p>
+            <a class="btn btn-primary" href="{{ path('app_logout') }}" role="button">Log out</a>
+            <a class="btn btn-success" href="{{ path('app_login') }}" role="button">Log in</a>
+            <a class="btn btn-danger" href="{{ path('inscription') }}" role="button">inscription</a>
+            <hr class="my-4">
+        </div>
     </div>
-</body>
-
-</html>
+</div>
+{% endblock %}
