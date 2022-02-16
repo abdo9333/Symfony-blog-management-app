@@ -1,0 +1,138 @@
+<?php
+
+namespace App\Entity;
+
+use App\Repository\PostRepository;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
+/**
+ * @ORM\Entity(repositoryClass=PostRepository::class)
+ * @Vich\Uploadable
+ */
+class Post
+{
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @var string
+     */
+    private $image;
+
+    /**
+     * @Vich\UploadableField(mapping="post_images", fileNameProperty="image")
+     * @var File
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     * @var \DateTimeImmutable
+     */
+    private $updatedAt;
+
+    // ...
+
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($image) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTimeImmutable('now');
+        }
+    }
+
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $title;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $discription;
+
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    private $postedAt;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getDiscription(): ?string
+    {
+        return $this->discription;
+    }
+
+    public function setDiscription(string $discription): self
+    {
+        $this->discription = $discription;
+
+        return $this;
+    }
+
+    public function getPostedAt(): ?\DateTimeImmutable
+    {
+        return $this->postedAt;
+    }
+
+    public function setPostedAt(\DateTimeImmutable $postedAt): self
+    {
+        $this->postedAt = $postedAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+}

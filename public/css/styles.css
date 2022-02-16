@@ -11712,3 +11712,12 @@ body {
 .card {
     border: none !important;
 }
+
+#container_posts {
+    display: flex;
+    justify-content: center;
+}
+
+.card-body {
+    text-align: center;
+}
