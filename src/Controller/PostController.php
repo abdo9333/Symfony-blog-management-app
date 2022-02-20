@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Entity\Commentaire;
 use App\Form\PostType;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -10,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Form\CommentaireType;
 
 /**
  * @Route("/post")
@@ -19,10 +21,14 @@ class PostController extends AbstractController
     /**
      * @Route("/", name="post_index", methods={"GET"})
      */
-    public function index(PostRepository $postRepository): Response
+    public function index(PostRepository $postRepository,Request $request): Response
     {
+        $commentaire = new Commentaire();
+        $form = $this->createForm(CommentaireType::class,$commentaire);
+        $form->handleRequest($request);
         return $this->render('post/index.html.twig', [
             'posts' => $postRepository->findAll(),
+            'form' =>$form->createView(),
         ]);
     }
 
@@ -53,8 +59,9 @@ class PostController extends AbstractController
      */
     public function show(Post $post): Response
     {
-        return $this->render('post/show.html.twig', [
+                return $this->render('post/show.html.twig', [
             'post' => $post,
+            
         ]);
     }
 
@@ -90,4 +97,5 @@ class PostController extends AbstractController
 
         return $this->redirectToRoute('post_index', [], Response::HTTP_SEE_OTHER);
     }
+
 }
