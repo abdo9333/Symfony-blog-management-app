@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class DefaultController extends AbstractController
 {
     /** 
-    *@Route("/home", name="home")
+    *@Route("/", name="home")
     */
     
    public function index(PostRepository $postRepository, Request $request, PaginatorInterface $paginator): Response
