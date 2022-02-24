@@ -2,16 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Post;
-use App\Entity\Commentaire;
+use App\Form\CommentType;
 use App\Form\PostType;
 use App\Repository\PostRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Form\CommentaireType;
 
 /**
  * @Route("/post")
@@ -23,12 +24,10 @@ class PostController extends AbstractController
      */
     public function index(PostRepository $postRepository,Request $request): Response
     {
-        $commentaire = new Commentaire();
-        $form = $this->createForm(CommentaireType::class,$commentaire);
-        $form->handleRequest($request);
+        
         return $this->render('post/index.html.twig', [
             'posts' => $postRepository->findAll(),
-            'form' =>$form->createView(),
+           
         ]);
     }
 
@@ -45,7 +44,7 @@ class PostController extends AbstractController
             $entityManager->persist($post);
             $entityManager->flush();
 
-            return $this->redirectToRoute('post_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('post_show', ["id" => "1" ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('post/new.html.twig', [
@@ -55,12 +54,27 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="post_show", methods={"GET"})
+     * @Route("/{id}", name="post_show", methods={ "GET", "POST"})
      */
-    public function show(Post $post): Response
+    public function show(Post $post, Request $request, EntityManagerInterface $manager): Response
     {
-                return $this->render('post/show.html.twig', [
+        $comment =new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $comment->setCeatedAt(new \DateTime());
+            $comment->setPost($post);
+            $manager->persist($comment);
+            $manager->flush();
+
+            return $this->redirectToRoute('post_show', ['id'=> $post->getId()]);
+
+        }
+
+         return $this->render('post/show.html.twig', [
             'post' => $post,
+            'commentForm' => $form->createView(),
             
         ]);
     }
@@ -76,7 +90,7 @@ class PostController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('post_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('post_show', ["id" => $post->getId() ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('post/edit.html.twig', [
@@ -87,7 +101,7 @@ class PostController extends AbstractController
 
     /**
      * @Route("/{id}", name="post_delete", methods={"POST"})
-     */
+     *//*
     public function delete(Request $request, Post $post, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$post->getId(), $request->request->get('_token'))) {
@@ -95,7 +109,7 @@ class PostController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('post_index', [], Response::HTTP_SEE_OTHER);
-    }
+        return $this->redirectToRoute('post_show', [], Response::HTTP_SEE_OTHER);
+    }*/
 
 }

@@ -86,13 +86,13 @@ class Post
     private $postedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="post")
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="post", orphanRemoval=true)
      */
-    private $commentaires;
+    private $comments;
 
     public function __construct()
     {
-        $this->commentaires = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -149,32 +149,39 @@ class Post
     }
 
     /**
-     * @return Collection|Commentaire[]
+     * @return Collection|Comment[]
      */
-    public function getCommentaires(): Collection
+    public function getComments(): Collection
     {
-        return $this->commentaires;
+        return $this->comments;
     }
 
-    public function addCommentaire(Commentaire $commentaire): self
+    public function addComment(Comment $comment): self
     {
-        if (!$this->commentaires->contains($commentaire)) {
-            $this->commentaires[] = $commentaire;
-            $commentaire->setPost($this);
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setPost($this);
         }
 
         return $this;
     }
 
-    public function removeCommentaire(Commentaire $commentaire): self
+    public function removeComment(Comment $comment): self
     {
-        if ($this->commentaires->removeElement($commentaire)) {
+        if ($this->comments->removeElement($comment)) {
             // set the owning side to null (unless already changed)
-            if ($commentaire->getPost() === $this) {
-                $commentaire->setPost(null);
+            if ($comment->getPost() === $this) {
+                $comment->setPost(null);
             }
         }
 
         return $this;
     }
+
+    public function __ToString()
+   {
+       return $this->getTitle();
+   }
+
+
 }
