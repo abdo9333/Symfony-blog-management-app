@@ -90,4 +90,11 @@ class Comment
 
         return $this;
     }
+    public function __construct()
+    {
+        
+       
+        $this->ceatedAt = new \DateTime();
+
+    }
 }

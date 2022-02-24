@@ -7,7 +7,7 @@
         <img class="card-img-top" style="width: 286px; height: 180px;" src="{{ vich_uploader_asset(post, 'imageFile') }}" alt="{{ post.image }}">
         <div class=" card-body ">
             <h5 class="card-title ">{{ post.title }}</h5>
-            <p class="card-text ">{{ post.discription }}</p>
+            <p class="card-text ">{{ post.discription |length > 150 ? post.discription |slice(0, 150) ~ '...' : post.discription }}</p>
             <a href="{{ path( 'post_show', { 'id': post.id}) }} " class="btn btn-primary ">Lire la suite</a>
         </div>
     </div>
