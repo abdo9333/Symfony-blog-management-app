@@ -4,10 +4,6 @@
         <div class="jumbotron text-center mx-auto">
             <h1 class="display-4 mt-4">UE 3DW22 - Diversification des langages</h1>
             <p class="lead">Bienvenu dans votre bibliothèque</p>
-
-            <a class="btn btn-success" href="{{ path('app_login') }}" role="button">Connexion</a>
-            <a class="btn btn-primary " href="{{ path('inscription') }}" role="button">inscription</a>
-            <a class="btn btn-danger " href="{{ path('app_logout') }}" role="button">Se déconnecter</a>
             <hr class="my-4">
         </div>
     </div>
@@ -19,7 +15,7 @@
         <img class="card-img-top" style="width: 286px; height: 180px;" src="{{ vich_uploader_asset(post, 'imageFile') }}" alt="{{ post.image }}">
         <div class=" card-body ">
             <h5 class="card-title ">{{ post.title }}</h5>
-            <p class="card-text ">{{ post.discription }}</p>
+            <p class="card-text ">{{ post.discription |length > 150 ? post.discription |slice(0, 150) ~ '...' : post.discription }}</p>
             <a href="{{ path( 'post_show', { 'id': post.id}) }} " class="btn btn-primary ">Lire la suite</a>
         </div>
     </div>

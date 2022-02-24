@@ -1,49 +1,66 @@
-{% extends 'base.html.twig' %} {% block title %}Post{% endblock %} {% block body %}
-<h1>Post</h1>
+{% extends 'base.html.twig' %} {% form_theme commentForm 'bootstrap_5_layout.html.twig' %} {% block title %}Post{% endblock %} {% block body %}
+<div class="container">
+    <div class="media-container-row">
+        <h1 class="align-center pb-3 mbr-fonts-style display-2">{{ post.title }}</h1>
 
-<table class="table">
-    <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ post.id }}</td>
-        </tr>
-        <tr>
-            <th>Title</th>
-            <td>{{ post.title }}</td>
-        </tr>
-        <tr>
-            <th>Discription</th>
-            <td>{{ post.discription }}</td>
-        </tr>
-        <tr>
-            <th>image</th>
-            <td> <img class="card-img-top" style="width: 286px; height: 180px;" src="{{ vich_uploader_asset(post, 'imageFile') }}" alt="{{ post.image }}"></td>
-        </tr>
-        <tr>
-            <th>PostedAt</th>
-            <td>{{ post.postedAt ? post.postedAt|date('Y-m-d H:i:s') : '' }}</td>
-        </tr>
-    </tbody>
-</table>
-
-<div class="conatiner">
-    <h3>Commentaires : </h3> {% for comment in post.comments %}
-    <div class="comment">
-        <div class="row">
-            <div class="col-3">
-                {{comment.auther}}<small> {{comment.ceatedAt | date('d/m/y')}}</small>
-            </div>
-            <div class="col">
-                {{comment.content | raw}}
+    </div>
+</div>
+<section class="mbr-section content6 cid-qv5zlioaYy">
+    <div class="container">
+        <div class="media-container-row">
+            <div class="col-12 col-md-8">
+                <div class="media-container-row">
+                    <div class="mbr-figure">
+                        <img class="card-img-top " style="width: 786px; height: 280px; " media-simple="true" src="{{ vich_uploader_asset(post, 'imageFile') }} " alt="{{ post.image }} ">
+                    </div>
+                    <div class="media-content">
+                        <div class="mbr-section-text">
+                            <p class="mbr-text mb-0 mbr-fonts-style display-7"> Publié le <i> {{ post.postedAt ? post.postedAt|date( 'Y-m-d') : '' }} </i> <br><i> {{ post.auther}}</i>
+                            </p>
+                            <p></p>
+                            <p class="mbr-text mb-0 mbr-fonts-style display-7">
+                                {{ post.discription }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    {% endfor %} {{ form_start(commentForm)}} {{form_row(commentForm.auther, {'attr': {'placeholder': 'Votre nom'}})}} {{form_row(commentForm.content, {'attr': {'placeholder': 'Votre Commentaire'}})}}
-    <button type="submit" class="btn btn-success">Valider</button> {{ form_end(commentForm)}}
+</section>
+
+<div class="container mt-5">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-8">
+            <div class="headings d-flex justify-content-between align-items-center mb-3">
+                <h5> Comments</h5>
+            </div>
+            {% for comment in post.comments %}
+            <div class="card p-3 mt-2">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="user d-flex flex-row align-items-center"> <span> <small class="font-weight-bold text-primary">@{{comment.auther}}</small> <small class="font-weight-bold">{{comment.content}} </small></span> </div> <small>{{comment.ceatedAt | date('d/m/y')}}</small>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 </div>
 
+<div class="container mt-5">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-8">
+            <div class="headings d-flex justify-content-between align-items-center mb-3">
+                <h5>Commenter</h5>
+            </div>
+            <div class="card p-3 mt-2">
+                {{ form_start(commentForm)}} {{form_row(commentForm.auther, {'attr': {'placeholder': 'Votre nom'}})}} {{form_row(commentForm.content, {'attr': {'placeholder': 'Votre Commentaire'}})}}
+                <button type="submit " class="btn btn-success ">Valider</button> {{ form_end(commentForm)}}
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- 
-<a href="{{ path('post_index') }}">back to list</a>
+<a href="{{ path( 'post_index') }} ">back to list</a>
 
-<a href="{{ path('post_edit', {'id': post.id}) }}">edit</a>-->{% endblock %}
+<a href="{{ path( 'post_edit', { 'id': post.id}) }} ">edit</a>-->{% endblock %}

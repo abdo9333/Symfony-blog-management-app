@@ -56,14 +56,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $tel;
 
+
     /**
-     * @ORM\OneToMany(targetEntity=Book::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Post::class, mappedBy="auther")
      */
-    private $books;
+    private $allPostsFromUser;
 
     public function __construct()
     {
-        $this->books = new ArrayCollection();
+        $this->posts = new ArrayCollection();
+        $this->allPostsFromUser = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -191,38 +193,39 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Book[]
-     */
-    public function getBooks(): Collection
-    {
-        return $this->books;
-    }
-
-    public function addBook(Book $book): self
-    {
-        if (!$this->books->contains($book)) {
-            $this->books[] = $book;
-            $book->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBook(Book $book): self
-    {
-        if ($this->books->removeElement($book)) {
-            // set the owning side to null (unless already changed)
-            if ($book->getUser() === $this) {
-                $book->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
    public function __ToString()
    {
        return $this->getEmail();
-   } 
+   }
+
+   /**
+    * @return Collection|Post[]
+    */
+   public function getAllPostsFromUser(): Collection
+   {
+       return $this->allPostsFromUser;
+   }
+
+   public function addAllPostsFromUser(Post $allPostsFromUser): self
+   {
+       if (!$this->allPostsFromUser->contains($allPostsFromUser)) {
+           $this->allPostsFromUser[] = $allPostsFromUser;
+           $allPostsFromUser->setAuther($this);
+       }
+
+       return $this;
+   }
+
+   public function removeAllPostsFromUser(Post $allPostsFromUser): self
+   {
+       if ($this->allPostsFromUser->removeElement($allPostsFromUser)) {
+           // set the owning side to null (unless already changed)
+           if ($allPostsFromUser->getAuther() === $this) {
+               $allPostsFromUser->setAuther(null);
+           }
+       }
+
+       return $this;
+   }
+   
 }

@@ -90,9 +90,18 @@ class Post
      */
     private $comments;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="allPostsFromUser")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $auther;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+       
+        $this->postedAt = new \DateTimeImmutable();
+
     }
 
     public function getId(): ?int
@@ -183,5 +192,17 @@ class Post
        return $this->getTitle();
    }
 
+    public function getAuther(): ?User
+    {
+        return $this->auther;
+    }
+
+    public function setAuther(?User $auther): self
+    {
+        $this->auther = $auther;
+
+        return $this;
+    }
+   
 
 }
