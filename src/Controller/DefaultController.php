@@ -40,6 +40,14 @@ class DefaultController extends AbstractController
         'posts' => $pagination,
     ]);
    }
+
+   /**
+     * @Route("presentation", name="presentation")
+     */
+    public function presentation(): Response
+    {
+        return $this->render('default/Default/presenation.html.twig', []);
+    }
    
 
 }

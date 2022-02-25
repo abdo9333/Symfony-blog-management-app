@@ -1,4 +1,7 @@
 {% extends 'base.html.twig' %} {% block body %}
+<div class="headings d-flex justify-content-between align-items-center mb-3">
+    <h5>Contactez-nous</h5>
+</div>
 <div class="bg-white p-5 contact-form">
     <div class="form-group">
         {{ form_start(our_form) }} {{ form_row(our_form.fullName, {'attr': {'class': 'form-control'}}) }}
