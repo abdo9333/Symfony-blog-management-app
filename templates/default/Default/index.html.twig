@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %} {% block body %}
+<div class="container mt-4">
+    <div class="card bg-light mb-3">
+        <div class="jumbotron text-center mx-auto">
+            <h1 class="display-4 mt-4">UE 3DW22 - Diversification des langages</h1>
+            <p class="lead">Bienvenu dans votre bibliothèque</p>
+            <hr class="my-4">
+        </div>
+    </div>
+</div>
+<div id="container_posts">
+    {% for post in posts %}
+
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" style="width: 286px; height: 180px;" src="{{ vich_uploader_asset(post, 'imageFile') }}" alt="{{ post.image }}">
+        <div class=" card-body ">
+            <h5 class="card-title ">{{ post.title }}</h5>
+            <p class="card-text ">{{ post.discription |length > 150 ? post.discription |slice(0, 150) ~ '...' : post.discription }}</p>
+            <a href="{{ path( 'post_show', { 'id': post.id}) }} " class="btn btn-primary ">Lire la suite</a>
+        </div>
+    </div>
+    {% else %}
+    <p>no records found</p>
+    {% endfor %}
+</div> {% endblock %}
