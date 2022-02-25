@@ -36,7 +36,7 @@ class DefaultController extends AbstractController
 
 
 
-       return $this->render('Default/index.html.twig', [
+       return $this->render('default/Default/index.html.twig', [
         'posts' => $pagination,
     ]);
    }
